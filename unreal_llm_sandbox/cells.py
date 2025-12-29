@@ -11,7 +11,7 @@ import uuid
 import re
 import mistune
 from fasthtml.common import * 
-from .config import *
+from app_config import PROMPT_SPLIT, AGENT_CODE_SPLIT
 
 
 # %% ../nbs/cells.ipynb 5

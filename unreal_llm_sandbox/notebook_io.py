@@ -9,8 +9,8 @@ import io
 import base64
 import json
 from PIL import Image
-from .cells import MarkdownCell, CodeCell, PromptCell, AgentCell, PROMPT_SPLIT
-from .config import *
+from .cells import MarkdownCell, CodeCell, PromptCell, AgentCell
+from .config import PROMPT_SPLIT
 
 # %% ../nbs/notebook_io.ipynb 3
 def reconstruct_cells_from_history(notebook_history):
