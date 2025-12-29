@@ -411,7 +411,7 @@ async def save_notebook(notebook_file: str, request):
 from fasthtml.common import serve
 
 def start_server():
-    serve(app, host='0.0.0.0', port=5001)
+    serve(app, host='0.0.0.0', port=5001, reload=False)
 
 if __name__ == "__main__":
     start_server()
