@@ -1,0 +1,14 @@
+website:
+  sidebar:
+    contents:
+      - index.ipynb
+      - agent.ipynb
+      - cells.ipynb
+      - config.ipynb
+      - kernel.ipynb
+      - llm.ipynb
+      - llm_tools.ipynb
+      - main.ipynb
+      - notebook_io.ipynb
+      - scripts.ipynb
+      - streaming.ipynb

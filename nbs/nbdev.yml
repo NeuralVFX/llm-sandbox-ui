@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "unreal-llm-sandbox"
+  site-url: "https://NeuralVFX.github.io/unreal-llm-sandbox"
+  description: "LLM Sandbox For Unreal Engine"
+  repo-branch: main
+  repo-url: "https://github.com/NeuralVFX/unreal-llm-sandbox"
