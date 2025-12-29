@@ -2,7 +2,7 @@
 
 # %% auto 0
 __all__ = ['CSS', 'daisy_hdrs', 'app', 'rt', 'interrupt', 'exe_prompt', 'exe_code', 'agent_stream', 'Toolbar', 'add_cell',
-           'load_notebook', 'save_notebook']
+           'load_notebook', 'save_notebook', 'start_server']
 
 # %% ../nbs/main.ipynb 3
 CSS = """
@@ -405,4 +405,12 @@ async def save_notebook(notebook_file: str, request):
         json.dump(notebook, f, indent=2, ensure_ascii=False)
     
     return {"status": "saved", "file": notebook_file}
+    
+
+# %% ../nbs/main.ipynb 17
+def start_server():
+    srv = JupyUvi(app)
+
+if __name__ == "__main__":
+    start_server()
     
