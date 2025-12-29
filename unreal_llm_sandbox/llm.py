@@ -3,6 +3,17 @@
 # %% auto 0
 __all__ = ['RemoteToolLLM', 'send_llm_request']
 
+# %% ../nbs/llm.ipynb 2
+import json
+import requests
+import litellm
+
+from .app_config import MODEL, KERNEL_URL, NOTEBOOK_SYS_PROMPT
+from .llm_tools import TOOLS, TOOL_SCHEMAS
+
+litellm.drop_params = True
+
+
 # %% ../nbs/llm.ipynb 3
 class RemoteToolLLM:
     """LLM chat client that executes tools in Unreal Engine via url."""
