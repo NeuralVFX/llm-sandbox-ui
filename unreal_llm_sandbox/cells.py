@@ -330,7 +330,7 @@ class PromptCell(BaseCell):
         toggle_input = Input(type='checkbox', cls="hidden toggle-edit")
 
         menu_bar = self.build_top_menu()
-        source_area = self.build_markdown_source_area(self.source)
+        source_area = self.build_markdown_source_area(self.source,round_b=False)
         output_area = self.build_output_area()
         
         watch_script = Script(f"""
@@ -391,7 +391,8 @@ class MarkdownCell(BaseCell):
         toggle_input = Input(type='checkbox', cls="hidden toggle-edit")
 
         menu_bar = self.build_top_menu()
-        source_area = self.build_markdown_source_area(self.source)
+        source_area = self.build_markdown_source_area(self.source,round_b=True)
+
 
         return Div(
             toggle_input,
@@ -567,7 +568,7 @@ class AgentCell(BaseCell):
     def build_source_area(self):
         """Build editable source code/markdown area."""
 
-        markdown_source = self.build_markdown_source_area(self.source_prompt)
+        markdown_source = self.build_markdown_source_area(self.source_prompt,round_b=False)
 
         monaco_editor_script = self.build_monaco_editor(self.cell_id,self.source_code,100,300)
        
