@@ -85,7 +85,7 @@ from fasthtml.common import *
 from fasthtml.jupyter import JupyUvi
 from starlette.staticfiles import StaticFiles
 
-from app_config import MODEL, KERNEL_URL, NOTEBOOK_SYS_PROMPT
+from .app_config import MODEL, KERNEL_URL, NOTEBOOK_SYS_PROMPT
 from .cells import MarkdownCell, CodeCell, PromptCell, AgentCell
 from .streaming import SSEStream, active_streams
 from .kernel import execute_unreal_code, convert_to_accumulated

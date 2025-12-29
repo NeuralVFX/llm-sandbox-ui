@@ -9,7 +9,7 @@ import requests
 from ddgs import DDGS
 import lisette
 
-from app_config import (
+from unreal_llm_sandbox.app_config import (
     KERNEL_URL, MODEL, NOTEBOOK_SYS_PROMPT, SYS_PROMPT,
     CODE_GENERATOR, CODE_IMPROVER, UNIT_TEST_STR, SYS_CODER, SYS_REVIEW
 )
