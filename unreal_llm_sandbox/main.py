@@ -408,8 +408,10 @@ async def save_notebook(notebook_file: str, request):
     
 
 # %% ../nbs/main.ipynb 17
+from fasthtml.common import serve
+
 def start_server():
-    srv = JupyUvi(app)
+    serve(app, host='0.0.0.0', port=5001)
 
 if __name__ == "__main__":
     start_server()

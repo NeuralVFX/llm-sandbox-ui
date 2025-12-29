@@ -6,7 +6,7 @@ __all__ = ['KERNEL_URL', 'MODEL', 'PROMPT_SPLIT', 'AGENT_CODE_SPLIT', 'AGENT_COD
            'NOTEBOOK_SYS_PROMPT']
 
 # %% ../nbs/config.ipynb 2
-KERNEL_URL = 'https://ferromagnesian-rosetta-inexpertly.ngrok-free.dev'
+KERNEL_URL = 'http://localhost:8765'
 MODEL = 'gpt-5.2'
 
 PROMPT_SPLIT = '\n\n##### LLM Response: <!-- LLM -->\n\n'
