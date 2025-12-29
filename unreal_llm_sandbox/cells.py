@@ -135,16 +135,18 @@ class BaseCell:
             cls='flex justify-between items-center bg-gray-800 text-white py-0.5 px-2 rounded-t-lg border-b border-gray-700'
         )
 
-    def build_markdown_source_area(self,source):
+    def build_markdown_source_area(self,source,round_b=True):
+        round_cls = 'rounded-b-lg' if round_b else ''
+
         text_area = Textarea(source,
                     placeholder='Enter Markdown Here...', 
                     rows=1,
-                    cls='w-full text-gray-100 p-4 bg-[#1e1e1e] rounded-b-lg'\
+                    cls=f'w-full text-gray-100 p-4 bg-[#1e1e1e] {round_cls}'\
                     ' max-h-[500px] overflow-y-auto border-0 content-edit')
 
         markdown_display = Div(NotStr(mistune.html(source)), 
                             cls='w-full markdown-body bg-gray-900 text-gray-100 p-4'\
-                            ' rounded-b-lg max-h-[500px] overflow-y-auto content-render', 
+                            f' {round_cls} max-h-[500px] overflow-y-auto content-render', 
                             style='list-style-position: inside; min-height: 3.5em;')
 
 
