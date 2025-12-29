@@ -351,7 +351,7 @@ def load_notebook(notebook_file:str):
 
     else:
         cells = []
-        with open(notebook_file, 'r') as f:
+        with open(notebook_file, 'r', encoding='utf-8') as f:
             notebook = json.load(f)
             cells = notebook['cells']
         
@@ -401,7 +401,7 @@ async def save_notebook(notebook_file: str, request):
         "cells": ipynb_cells
     }
     
-    with open(notebook_file, 'w') as f:
+    with open(notebook_file, 'w', encoding='utf-8') as f:
         json.dump(notebook, f, indent=2, ensure_ascii=False)
     
     return {"status": "saved", "file": notebook_file}
