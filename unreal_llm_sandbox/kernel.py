@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['strip_ansi', 'format_kernel_stream', 'execute_unreal_code', 'convert_to_accumulated']
 
-# %% ../nbs/kernel.ipynb 2
+# %% ../nbs/kernel.ipynb 3
 import re
 import copy
 import requests
@@ -11,7 +11,7 @@ import requests
 from .app_config import KERNEL_URL
 
 
-# %% ../nbs/kernel.ipynb 3
+# %% ../nbs/kernel.ipynb 4
 def strip_ansi(text):
     """Remove ANSI escape codes from text.
     

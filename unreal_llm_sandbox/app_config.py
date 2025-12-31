@@ -5,7 +5,7 @@ __all__ = ['KERNEL_URL', 'MODEL', 'PROMPT_SPLIT', 'AGENT_CODE_SPLIT', 'AGENT_COD
            'UNIT_TEST_STR', 'CODE_GENERATOR', 'CODE_IMPROVER', 'SYS_CODER', 'SYS_REVIEW', 'SYS_PROMPT',
            'NOTEBOOK_SYS_PROMPT']
 
-# %% ../nbs/app_config.ipynb 2
+# %% ../nbs/app_config.ipynb 3
 KERNEL_URL = 'http://localhost:8765'
 MODEL = 'gpt-5.2'
 

@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['SentimentChecker', 'AgentTools']
 
-# %% ../nbs/agent.ipynb 2
+# %% ../nbs/agent.ipynb 3
 from dataclasses import dataclass
 import requests
 from ddgs import DDGS
@@ -16,7 +16,7 @@ from unreal_llm_sandbox.app_config import (
 from .kernel import *
 
 
-# %% ../nbs/agent.ipynb 3
+# %% ../nbs/agent.ipynb 4
 @dataclass
 class SentimentChecker:
     """ Use this tool register whether you think the code review your looking at approved\n
@@ -24,7 +24,7 @@ class SentimentChecker:
     approved: bool
     
 
-# %% ../nbs/agent.ipynb 4
+# %% ../nbs/agent.ipynb 5
 class AgentTools():
     def __init__(self, stream, chat, prompt, cell_id, code = '', print_updates = False):
         """Initialize agent tools.

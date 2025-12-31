@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['active_streams', 'SSEStream']
 
-# %% ../nbs/streaming.ipynb 2
+# %% ../nbs/streaming.ipynb 3
 import queue
 import asyncio
 import json

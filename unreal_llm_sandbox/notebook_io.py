@@ -4,7 +4,7 @@
 __all__ = ['reconstruct_cells_from_history', 'reconstruct_ipynb_cell', 'prepare_chat_history', 'is_ask_cell', 'prep_prompt_cell',
            'seperate_markdown', 'prep_markdown_cell', 'format_for_chat', 'prep_code_cell', 'prep_code_cell_output']
 
-# %% ../nbs/notebook_io.ipynb 2
+# %% ../nbs/notebook_io.ipynb 3
 import io
 import base64
 import json
@@ -12,7 +12,7 @@ from PIL import Image
 from .cells import MarkdownCell, CodeCell, PromptCell, AgentCell
 from .app_config import PROMPT_SPLIT
 
-# %% ../nbs/notebook_io.ipynb 3
+# %% ../nbs/notebook_io.ipynb 4
 def reconstruct_cells_from_history(notebook_history):
     """Convert raw JavaScript cell data into rendered cell objects.
     
@@ -52,7 +52,7 @@ def reconstruct_cells_from_history(notebook_history):
     
     return cells
 
-# %% ../nbs/notebook_io.ipynb 4
+# %% ../nbs/notebook_io.ipynb 5
 def reconstruct_ipynb_cell(cell):
     """Convert a Jupyter notebook cell dict to the appropriate cell class.
     
@@ -89,7 +89,7 @@ def reconstruct_ipynb_cell(cell):
         return None
 
 
-# %% ../nbs/notebook_io.ipynb 5
+# %% ../nbs/notebook_io.ipynb 6
 def prepare_chat_history(cell_list):
     """
     Converts a list of notebook cells into a conversation history for the LLM.
@@ -133,7 +133,7 @@ def prepare_chat_history(cell_list):
     return cell_context
 
 
-# %% ../nbs/notebook_io.ipynb 6
+# %% ../nbs/notebook_io.ipynb 7
 def is_ask_cell(cell):
     """Check if a cell is a prompt cell with a response.
     
@@ -151,7 +151,7 @@ def is_ask_cell(cell):
         return False
          
 
-# %% ../nbs/notebook_io.ipynb 7
+# %% ../nbs/notebook_io.ipynb 8
 def prep_prompt_cell(cell):
     """
     Extracts text and embedded images from a markdown cell.
@@ -175,7 +175,7 @@ def prep_prompt_cell(cell):
     return formatted_question, answer
 
 
-# %% ../nbs/notebook_io.ipynb 8
+# %% ../nbs/notebook_io.ipynb 9
 def seperate_markdown(markdown):
     """Separate markdown text blocks from embedded base64 images.
     
@@ -200,7 +200,7 @@ def seperate_markdown(markdown):
     return out_list
 
 
-# %% ../nbs/notebook_io.ipynb 9
+# %% ../nbs/notebook_io.ipynb 10
 def prep_markdown_cell(markdown_cell):
     """
     Extracts text and embedded images from a markdown cell.

@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['TOOLS', 'TOOL_SCHEMAS', 'get_tools', 'register_tool', 'search_web', 'read_url']
 
-# %% ../nbs/llm_tools.ipynb 2
+# %% ../nbs/llm_tools.ipynb 3
 import requests
 import litellm
 import json

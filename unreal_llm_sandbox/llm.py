@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['RemoteToolLLM', 'send_llm_request']
 
-# %% ../nbs/llm.ipynb 2
+# %% ../nbs/llm.ipynb 3
 import json
 import requests
 import litellm
@@ -14,7 +14,7 @@ from .llm_tools import TOOLS, TOOL_SCHEMAS
 litellm.drop_params = True
 
 
-# %% ../nbs/llm.ipynb 3
+# %% ../nbs/llm.ipynb 4
 class RemoteToolLLM:
     """LLM chat client that executes tools in Unreal Engine via url."""
     def __init__(self, model='gpt-4.1'):
