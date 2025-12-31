@@ -14,7 +14,7 @@ from fasthtml.common import *
 from .app_config import PROMPT_SPLIT, AGENT_CODE_SPLIT
 
 
-# %% ../nbs/cells.ipynb 5
+# %% ../nbs/cells.ipynb 4
 up_arrow_ic = NotStr("&#11014")
 down_arrow_ic = NotStr("&#11015")
 close_ic = NotStr("&#x274C")
@@ -31,8 +31,16 @@ label_css = "text-xs text-gray-400 px-2 py-1 bg-gray-800"
 cell_button_format = 'btn btn-square btn-ghost btn-xs text-xl'
 
 
-# %% ../nbs/cells.ipynb 7
+# %% ../nbs/cells.ipynb 5
 def interrupt_button(cell_id):
+    """Create an interrupt button that aborts the active stream for a cell.
+    
+    Args:
+        cell_id: Unique cell identifier.
+        
+    Returns:
+        Button component that POSTs to /interrupt/{cell_id}.
+    """
     return Button(stop_ic, 
         onClick=f"""fetch('/interrupt/{cell_id}', {{
             method: 'POST', 
@@ -42,7 +50,7 @@ def interrupt_button(cell_id):
         cls=cell_button_format)
         
 
-# %% ../nbs/cells.ipynb 9
+# %% ../nbs/cells.ipynb 6
 class BaseCell:
     """Base class for all notebook cell types.
     
@@ -136,6 +144,15 @@ class BaseCell:
         )
 
     def build_markdown_source_area(self,source,round_b=True):
+        """Build textarea and rendered markdown display for a cell.
+        
+        Args:
+            source: Markdown text content.
+            round_b: If True, apply rounded bottom corners.
+            
+        Returns:
+            List of [Textarea, Div] components.
+        """
         round_cls = 'rounded-b-lg' if round_b else ''
 
         text_area = Textarea(source,
@@ -153,7 +170,17 @@ class BaseCell:
         return [text_area, markdown_display]
 
     def build_monaco_editor(self,cell_id,source_code='', min_height=20, max_height=500):
-    
+        """Build Monaco editor initialization script for a code cell.
+        
+        Args:
+            cell_id: Unique cell identifier for the editor container.
+            source_code: Initial code content.
+            min_height: Minimum editor height in pixels.
+            max_height: Maximum editor height in pixels.
+            
+        Returns:
+            Script component that initializes Monaco editor.
+        """
         monaco_editor_script = Script(f"""
                                 
                 require(['vs/editor/editor.main'], function() {{
@@ -190,7 +217,18 @@ class BaseCell:
         return monaco_editor_script
 
     def build_code_output(self, tag='',min_height=100, max_height=300, outputs_json=[], round_b = False):
-
+        """Build code output display area with hidden storage.
+        
+        Args:
+            tag: Suffix for CSS class names (e.g., '-code').
+            min_height: Minimum output area height in pixels.
+            max_height: Maximum output area height in pixels.
+            outputs_json: JSON string of Jupyter-style outputs.
+            round_b: If True, apply rounded bottom corners.
+            
+        Returns:
+            List of [Pre (display), Div (store)] components.
+        """
         if round_b:
             round_button_cls = 'rounded-b-lg' 
         else:
@@ -211,7 +249,17 @@ class BaseCell:
         return [output_area_code, output_store_code]
 
     def build_llm_output(self, tag='',min_height=100, max_height=300, outputs_json=""):
-
+        """Build LLM markdown output display area with hidden storage.
+        
+        Args:
+            tag: Suffix for CSS class names (e.g., '-llm').
+            min_height: Minimum output area height in pixels.
+            max_height: Maximum output area height in pixels.
+            outputs_json: Raw markdown string to display.
+            
+        Returns:
+            List of [Div (store), Div (display)] components.
+        """
         output_store = Div(
             outputs_json,  # ← Make sure this has content
             cls='output-store'+tag, 
@@ -256,9 +304,13 @@ class BaseCell:
         pass
 
 
-# %% ../nbs/cells.ipynb 11
+# %% ../nbs/cells.ipynb 7
 class PromptCell(BaseCell):
-
+    """Cell for LLM prompts with streaming markdown responses.
+    
+    Stores user prompt in source and LLM response in outputs.
+    Serializes to ipynb as markdown with PROMPT_SPLIT separator.
+    """
     cell_type = 'prompt'
 
     @classmethod
@@ -353,9 +405,13 @@ class PromptCell(BaseCell):
 
 
 
-# %% ../nbs/cells.ipynb 13
+# %% ../nbs/cells.ipynb 8
 class MarkdownCell(BaseCell):
-
+    """Static markdown documentation cell.
+    
+    Displays rendered markdown with toggle to edit source.
+    No execution or outputs - purely for notes and documentation.
+    """
     cell_type = 'markdown'
 
     @classmethod
@@ -405,9 +461,13 @@ class MarkdownCell(BaseCell):
         )
 
 
-# %% ../nbs/cells.ipynb 15
+# %% ../nbs/cells.ipynb 9
 class CodeCell(BaseCell):
-
+    """Executable Python code cell with Monaco editor.
+    
+    Executes code via kernel and displays Jupyter-style outputs
+    (streams, execute_result, display_data, errors).
+    """
     cell_type = 'code'
     
     @classmethod
@@ -497,9 +557,20 @@ class CodeCell(BaseCell):
         )
 
 
-# %% ../nbs/cells.ipynb 17
+# %% ../nbs/cells.ipynb 10
 class AgentCell(BaseCell):
-
+    """Autonomous code generation cell with iterative refinement.
+    
+    Combines a prompt input, Monaco code editor, and dual output areas
+    (unit test results + LLM review). Runs generate→test→improve loops
+    until code passes review.
+    
+    Attributes:
+        source_prompt: User's code generation request.
+        source_code: Generated/edited Python code.
+        outputs_llm: Agent review markdown.
+        outputs_code: Unit test execution outputs.
+    """
     cell_type = 'agent'
 
 
