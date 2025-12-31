@@ -347,8 +347,10 @@ async def save_notebook(notebook_file: str, request):
 import uvicorn
 
 def start_server():
-    uvicorn.run(app, host='0.0.0.0', port=5001)
-    
+    uvicorn.run(app,
+                 host='0.0.0.0',
+                 port=5001, 
+                 timeout_graceful_shutdown=1)
 
 # %% ../nbs/main.ipynb 17
 #| eval: false
