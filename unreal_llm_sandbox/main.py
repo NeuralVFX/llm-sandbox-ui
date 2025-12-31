@@ -31,7 +31,7 @@ import unreal_llm_sandbox
 def get_static(fname):
     # This looks inside: unreal_llm_sandbox/static/
     ref = importlib.resources.files(unreal_llm_sandbox) / 'static' / fname
-    return ref.read_text()
+    return ref.read_text(encoding='utf-8')
 
 
 daisy_hdrs =[
