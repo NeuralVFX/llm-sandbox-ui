@@ -22,7 +22,6 @@ from .kernel import execute_unreal_code, convert_to_accumulated
 from .notebook_io import reconstruct_cells_from_history, prepare_chat_history, reconstruct_ipynb_cell
 from .llm import RemoteToolLLM, send_llm_request
 from .agent import AgentTools, SYS_PROMPT
-from .scripts import CODE_CELL_SCRIPT, HEIGHT_ADJ_SCRIPT, CELL_FOCUS_SCRIPT
 
 from fasthtml.common import *
 import importlib.resources
