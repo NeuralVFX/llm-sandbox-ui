@@ -3,8 +3,8 @@ website:
     contents:
       - index.ipynb
       - agent.ipynb
+      - app_config.ipynb
       - cells.ipynb
-      - config.ipynb
       - kernel.ipynb
       - llm.ipynb
       - llm_tools.ipynb
