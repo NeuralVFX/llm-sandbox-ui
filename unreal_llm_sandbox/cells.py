@@ -5,7 +5,7 @@ __all__ = ['up_arrow_ic', 'down_arrow_ic', 'close_ic', 'swap_ic', 'view_ic', 'cl
            'edit_ic', 'label_css', 'cell_button_format', 'interrupt_button', 'BaseCell', 'PromptCell', 'MarkdownCell',
            'CodeCell', 'AgentCell']
 
-# %% ../nbs/cells.ipynb 3
+# %% ../nbs/cells.ipynb 2
 import json
 import uuid
 import re
@@ -14,7 +14,7 @@ from fasthtml.common import *
 from .app_config import PROMPT_SPLIT, AGENT_CODE_SPLIT
 
 
-# %% ../nbs/cells.ipynb 5
+# %% ../nbs/cells.ipynb 4
 up_arrow_ic = NotStr("&#11014")
 down_arrow_ic = NotStr("&#11015")
 close_ic = NotStr("&#x274C")
@@ -31,7 +31,7 @@ label_css = "text-xs text-gray-400 px-2 py-1 bg-gray-800"
 cell_button_format = 'btn btn-square btn-ghost btn-xs text-xl'
 
 
-# %% ../nbs/cells.ipynb 7
+# %% ../nbs/cells.ipynb 6
 def interrupt_button(cell_id):
     return Button(stop_ic, 
         onClick=f"""fetch('/interrupt/{cell_id}', {{
@@ -42,7 +42,7 @@ def interrupt_button(cell_id):
         cls=cell_button_format)
         
 
-# %% ../nbs/cells.ipynb 9
+# %% ../nbs/cells.ipynb 8
 class BaseCell:
     """Base class for all notebook cell types.
     
@@ -256,7 +256,7 @@ class BaseCell:
         pass
 
 
-# %% ../nbs/cells.ipynb 11
+# %% ../nbs/cells.ipynb 10
 class PromptCell(BaseCell):
 
     cell_type = 'prompt'
@@ -353,7 +353,7 @@ class PromptCell(BaseCell):
 
 
 
-# %% ../nbs/cells.ipynb 13
+# %% ../nbs/cells.ipynb 12
 class MarkdownCell(BaseCell):
 
     cell_type = 'markdown'
@@ -405,7 +405,7 @@ class MarkdownCell(BaseCell):
         )
 
 
-# %% ../nbs/cells.ipynb 15
+# %% ../nbs/cells.ipynb 14
 class CodeCell(BaseCell):
 
     cell_type = 'code'
@@ -497,7 +497,7 @@ class CodeCell(BaseCell):
         )
 
 
-# %% ../nbs/cells.ipynb 17
+# %% ../nbs/cells.ipynb 16
 class AgentCell(BaseCell):
 
     cell_type = 'agent'

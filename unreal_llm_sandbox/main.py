@@ -4,7 +4,7 @@
 __all__ = ['daisy_hdrs', 'app', 'rt', 'get_static', 'interrupt', 'exe_prompt', 'exe_code', 'agent_stream', 'Toolbar', 'add_cell',
            'load_notebook', 'save_notebook', 'start_server']
 
-# %% ../nbs/main.ipynb 3
+# %% ../nbs/main.ipynb 2
 import json
 import asyncio
 import requests
@@ -58,7 +58,7 @@ app = FastHTML(hdrs=daisy_hdrs)
 rt = app.route
 
 
-# %% ../nbs/main.ipynb 5
+# %% ../nbs/main.ipynb 4
 @rt('/interrupt/{cell_id}', methods=['POST'])
 async def interrupt(cell_id: str, request):
     """Signal abort for an active stream.
@@ -80,7 +80,7 @@ async def interrupt(cell_id: str, request):
     return "OK"
     
 
-# %% ../nbs/main.ipynb 7
+# %% ../nbs/main.ipynb 6
 @rt('/execute_prompt/{cell_id}')
 async def exe_prompt(cell_id: str, request): 
     """Execute LLM prompt with notebook context via SSE.
@@ -119,7 +119,7 @@ async def exe_prompt(cell_id: str, request):
     return stream.response()
 
 
-# %% ../nbs/main.ipynb 9
+# %% ../nbs/main.ipynb 8
 @rt('/execute_code/{cell_id}')
 async def exe_code(cell_id: str, request):
     """Execute Python code in Unreal Engine via SSE.
@@ -151,7 +151,7 @@ async def exe_code(cell_id: str, request):
     return stream.response()
 
 
-# %% ../nbs/main.ipynb 11
+# %% ../nbs/main.ipynb 10
 @rt('/agent_tool_build/{cell_id}', methods=['POST'])
 async def agent_stream(cell_id: str, request):
     """Run agent code generation loop with tool calling via SSE.
@@ -213,7 +213,7 @@ async def agent_stream(cell_id: str, request):
     return stream.response()
     
 
-# %% ../nbs/main.ipynb 13
+# %% ../nbs/main.ipynb 12
 def Toolbar(title):
     return Div(
 
@@ -277,7 +277,7 @@ def add_cell(cell_type: str):
     return new_cell.render()
 
 
-# %% ../nbs/main.ipynb 15
+# %% ../nbs/main.ipynb 14
 @rt('/notebook/{notebook_file}')
 def load_notebook(notebook_file:str): 
     """Load a Jupyter Notebook file and render its cells."""
@@ -343,7 +343,7 @@ async def save_notebook(notebook_file: str, request):
     return {"status": "saved", "file": notebook_file}
     
 
-# %% ../nbs/main.ipynb 16
+# %% ../nbs/main.ipynb 15
 import uvicorn
 
 def start_server():
@@ -352,7 +352,7 @@ def start_server():
                  port=5001, 
                  timeout_graceful_shutdown=1)
 
-# %% ../nbs/main.ipynb 17
+# %% ../nbs/main.ipynb 16
 #| eval: false
 if __name__ == "__main__":
     start_server()
