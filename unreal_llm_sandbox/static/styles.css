@@ -64,4 +64,9 @@ body {
 .toggle-edit:checked ~ .content-edit { display: block; }
 .toggle-edit:checked ~ .content-render { display: none; }
 .toggle-edit:not(:checked) ~ .content-edit { display: none; }
-.toggle-edit:not(:checked) ~ .content-render { display: block; }
+.toggle-edit:not(:checked) ~ .content-render { display: block;}
+label:has(.tool-toggle:not(:checked)) {
+
+    opacity: 0.3;
+
+}

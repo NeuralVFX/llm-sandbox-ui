@@ -105,11 +105,13 @@ async def exe_prompt(cell_id: str, request):
     data = await request.json() 
 
     notebook = data.get('notebook', 'untitled')
+    
     stream_key = f"{notebook}:{cell_id}" 
 
     prompt = data['prompt']
     cell_dict_list = data.get('context', [])
-    
+    use_tools = data.get('use_tools', True) 
+
     cells = reconstruct_cells_from_history(cell_dict_list)
     ipynb_list = [cell.to_ipynb() for cell in cells]
     chat_history = prepare_chat_history(ipynb_list)
@@ -117,7 +119,7 @@ async def exe_prompt(cell_id: str, request):
     stream = SSEStream(stream_key)
     
     def run():
-        for msg in send_llm_request(prompt, history=chat_history):
+        for msg in send_llm_request(prompt, history=chat_history, use_ue_tools=use_tools):
             if stream.aborted(): break
             stream.text(msg)
         stream.done()
@@ -373,7 +375,7 @@ def start_server():
                  port=5001, 
                  timeout_graceful_shutdown=1)
 
-# %% ../nbs/main.ipynb 11
+# %% ../nbs/main.ipynb 12
 #| eval: false
 if __name__ == "__main__":
     start_server()

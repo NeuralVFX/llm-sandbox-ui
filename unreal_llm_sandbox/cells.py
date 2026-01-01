@@ -2,8 +2,8 @@
 
 # %% auto 0
 __all__ = ['up_arrow_ic', 'down_arrow_ic', 'close_ic', 'swap_ic', 'view_ic', 'clean_ic', 'minimize_ic', 'play_ic', 'stop_ic',
-           'edit_ic', 'label_css', 'cell_button_format', 'interrupt_button', 'BaseCell', 'PromptCell', 'MarkdownCell',
-           'CodeCell', 'AgentCell']
+           'edit_ic', 'tools_ic', 'label_css', 'cell_button_format', 'interrupt_button', 'BaseCell', 'PromptCell',
+           'MarkdownCell', 'CodeCell', 'AgentCell']
 
 # %% ../nbs/cells.ipynb 3
 import json
@@ -25,7 +25,7 @@ minimize_ic = NotStr("&#x25BC");
 play_ic = NotStr("&#9654")
 stop_ic = NotStr("&#9209")
 edit_ic = NotStr("&#x1F4DD")
-
+tools_ic = NotStr("&#x1F6E0")
 
 label_css = "text-xs text-gray-400 px-2 py-1 bg-gray-800"
 cell_button_format = 'btn btn-square btn-ghost btn-xs text-xl'
@@ -362,6 +362,12 @@ class PromptCell(BaseCell):
                             cls=cell_button_format),
                     Label(edit_ic,
                             cls=cell_button_format + ' toggle-label'),
+                    Label(
+                        Input(type='checkbox',
+                            cls="hidden tool-toggle",
+                            checked=True),
+                            tools_ic,
+                            cls=cell_button_format + ' cursor-pointer')
                 ),
                 cls='flex justify-start'
                 )

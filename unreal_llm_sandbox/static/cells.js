@@ -101,11 +101,15 @@ function executePromptCell(cellId)
     
     const notebook_name = document.querySelector('.notebook-name')?.value || 'untitled';
 
+
+    const use_tools = cell.querySelector('.tool-toggle')?.checked ?? true;
+
     const chat_data = {
         'prompt': prompt,
         'context': chat_history,
-        'notebook': notebook_name 
-    };
+        'notebook': notebook_name,
+        'use_tools': use_tools
+   	 };
 
     (async () => {
     const { fetchEventSource } = await import('https://esm.sh/@microsoft/fetch-event-source@2.0.1');

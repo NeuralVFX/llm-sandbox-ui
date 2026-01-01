@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['KERNEL_URL', 'MODEL', 'PROMPT_SPLIT', 'AGENT_CODE_SPLIT', 'AGENT_CODE_OUTPUT_SPLIT', 'AGENT_LLM_OUTPUT_SPLIT',
            'UNIT_TEST_STR', 'CODE_GENERATOR', 'CODE_IMPROVER', 'SYS_CODER', 'SYS_REVIEW', 'SYS_PROMPT',
-           'NOTEBOOK_SYS_PROMPT']
+           'NOTEBOOK_SYS_PROMPT', 'UE_TOOL_SYS_PROMPT']
 
 # %% ../nbs/app_config.ipynb 3
 KERNEL_URL = 'http://localhost:8765'
@@ -70,4 +70,13 @@ while unitTest not passed:
 NOTEBOOK_SYS_PROMPT = """You are an AI assistant, your goal is to help the user build tools.\n
 You're in a Jupyter Notebook, which is connected to Unreal Engine 5.6.\n
 The users programming language of choice is python.\n
-!!IMPORTANT!!: Always end your response with an explantion\n"""
+You can search the internet if unsure about an Unreal function\n"""
+
+UE_TOOL_SYS_PROMPT = """You are an AI assistant in a Jupyter Notebook.\n
+The TOOLS you have run in Unreal Engine.\n
+Your goal is to use TOOLS to:
+A) Modify the Unreal Scene.\n
+or..
+B) Answer questions ab out the Unreal Scene.\n
+**Use the TOOLS** provided to you to accomplish the task.\n
+Dont respond by generating blocks of code.\n"""

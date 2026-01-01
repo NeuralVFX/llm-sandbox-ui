@@ -8,7 +8,7 @@ import json
 import requests
 import litellm
 
-from .app_config import MODEL, KERNEL_URL, NOTEBOOK_SYS_PROMPT
+from .app_config import MODEL, KERNEL_URL, NOTEBOOK_SYS_PROMPT, UE_TOOL_SYS_PROMPT 
 from .llm_tools import TOOLS, TOOL_SCHEMAS
 
 litellm.drop_params = True
@@ -17,7 +17,7 @@ litellm.drop_params = True
 # %% ../nbs/llm.ipynb 4
 class RemoteToolLLM:
     """LLM chat client that executes tools in Unreal Engine via url."""
-    def __init__(self, model='gpt-4.1'):
+    def __init__(self, model='gpt-4.1',use_ue_tools=False):
         """
         LLM chat that executes tools in Unreal Engine.
         
@@ -27,10 +27,23 @@ class RemoteToolLLM:
         self.model = model
         
         # Fetch available tools from Unreal
-        self.tools = self._fetch_tools()
-        self.local_tools = self._fetch_local_tools()
-        self.all_tools = self.tools + self.local_tools
-        print(f"Connected to Unreal. Available tools: {[t['function']['name'] for t in self.all_tools]}")
+
+        #self.tools = self._fetch_tools()
+        #self.local_tools = self._fetch_local_tools()
+        #self.all_tools = self.tools + self.local_tools
+        if use_ue_tools:
+            self.all_tools = self._fetch_tools()
+            self.sys_prompt = UE_TOOL_SYS_PROMPT
+            print(f"Connected to Unreal. Available tools: {[t['function']['name'] for t in self.all_tools]}")
+
+        else:
+            self.all_tools = self._fetch_local_tools()
+            self.sys_prompt = NOTEBOOK_SYS_PROMPT
+            print(f"Available Notebook tools: {[t['function']['name'] for t in self.all_tools]}")
+
+
+        
+
     
     def _fetch_tools(self):
         """Fetch tool schemas from Unreal endpoint.
@@ -82,7 +95,7 @@ class RemoteToolLLM:
         
         return data['result']
     
-    def chat(self, prompt, history=None, system_prompt=None, max_steps=50, stream=True):
+    def chat(self, prompt, history=None, max_steps=50, stream=True):
         """Send message and handle tool calls automatically.
         
         Args:
@@ -97,8 +110,8 @@ class RemoteToolLLM:
         """
         messages = []
         # Add system prompt if this is the first message
-        if system_prompt:
-            messages.append({"role": "system", "content": system_prompt})
+        if self.sys_prompt:
+            messages.append({"role": "system", "content": self.sys_prompt})
         if history:
             messages += history
         
@@ -208,7 +221,7 @@ class RemoteToolLLM:
         self.tools = self._fetch_tools()
 
 
-def send_llm_request(prompt, history=None):
+def send_llm_request(prompt, history=None, use_ue_tools=False):
     """Stream LLM response with tool execution.
     
     Args:
@@ -218,9 +231,8 @@ def send_llm_request(prompt, history=None):
     Yields:
         Text chunks from LLM response.
     """
-    chat = RemoteToolLLM( model=MODEL)
+    chat = RemoteToolLLM( model=MODEL,
+                          use_ue_tools=use_ue_tools)
     
-    for chunk in chat.chat(prompt,
-                            history=history,
-                            system_prompt=NOTEBOOK_SYS_PROMPT):
+    for chunk in chat.chat(prompt, history=history):
         yield chunk
