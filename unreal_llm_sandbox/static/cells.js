@@ -308,8 +308,10 @@ function renderOutputPrompt(cellId,tag='')
         output_display.innerHTML = markdown;
         Prism.highlightAllUnder(output_display);
     }
-    output_display.scrollTop = output_display.scrollHeight; 
 
+    requestAnimationFrame(() => {
+        output_display.scrollTop = output_display.scrollHeight;
+    });
 
 }
 
@@ -398,7 +400,10 @@ function renderOutput(cellId, tag='')
 
         }
     output_display.innerHTML = out_html; 
-    output_display.scrollTop = output_display.scrollHeight; 
+
+    requestAnimationFrame(() => {
+        output_display.scrollTop = output_display.scrollHeight;
+    });
 
 }
 
