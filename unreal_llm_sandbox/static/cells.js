@@ -580,7 +580,7 @@ async function saveNotebook(filename) {
 setInterval(() => {
     const notebookName = document.querySelector('.notebook-name')?.value || 'untitled';
     saveNotebook(notebookName+'.ipynb');
-}, 2000);
+}, 5000);
 
 
 
