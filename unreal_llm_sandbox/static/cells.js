@@ -83,25 +83,20 @@ function clearOutput(cellId) {
  */
 function executePromptCell(cellId)
 {
-    // Clear Cell
     clearOutput(cellId);
 
-    // Get Output Area to Write To
     const cell = document.querySelector(`[data-cell-id="${cellId}"]`);
     const output_store = cell.querySelector('[class="output-store"]');
 
-    // Turn Off Edit Mode
+    const spinner = cell.querySelector('.cell-spinner');
+    spinner?.classList.remove('hidden');
+
     const toggle_edit = cell.querySelector('.toggle-edit');
     toggle_edit.checked = false;
 
-    // Prep Data
     const chat_history = gatherCellsForLLM(cellId);
-
     const prompt = extractCellInput(cellId);
-
     const notebook_name = document.querySelector('.notebook-name')?.value || 'untitled';
-
-
     const use_tools = cell.querySelector('.tool-toggle')?.checked ?? true;
 
     const chat_data = {
@@ -109,36 +104,34 @@ function executePromptCell(cellId)
         'context': chat_history,
         'notebook': notebook_name,
         'use_tools': use_tools
-   	 };
+    };
 
     (async () => {
-    const { fetchEventSource } = await import('https://esm.sh/@microsoft/fetch-event-source@2.0.1');
-    await fetchEventSource(`/execute_prompt/${cellId}`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(chat_data),
-        onmessage(ev) {
-            try {
-                const packet = JSON.parse(ev.data);
-                if (packet.type === 'text') {
-                    output_store.textContent += packet.data;
+        const { fetchEventSource } = await import('https://esm.sh/@microsoft/fetch-event-source@2.0.1');
+        await fetchEventSource(`/execute_prompt/${cellId}`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(chat_data),
+            onmessage(ev) {
+                try {
+                    const packet = JSON.parse(ev.data);
+                    if (packet.type === 'text') {
+                        output_store.textContent += packet.data;
+                    }
+                } catch(error) {
+                    output_store.textContent += ` ** Error In Stream ** `;
                 }
-            } catch(error) {
-                output_store.textContent += `
- ** Error In Stream ** 
-`;
-            }
-        },
-        onerror(error) {
-            output_store.textContent += `
- ** Connection of Server Error ** 
-` ;
-            console.error(error);
-        },
-    });
+            },
+            onerror(error) {
+                output_store.textContent += ` ** Connection or Server Error ** `;
+                spinner?.classList.add('hidden');
+                console.error(error);
+                throw error;  // This stops fetchEventSource from retrying
+            },
+        });
+        spinner?.classList.add('hidden');
     })();
 }
-
 
 /**
  * Extracts the input content from a cell based on its type.

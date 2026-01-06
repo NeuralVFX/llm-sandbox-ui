@@ -367,7 +367,9 @@ class PromptCell(BaseCell):
                             cls="hidden tool-toggle",
                             checked=True),
                             tools_ic,
-                            cls=cell_button_format + ' cursor-pointer')
+                            cls=cell_button_format + ' cursor-pointer'),
+                    Span(cls="loading loading-spinner loading-sm text-primary cell-spinner hidden"),
+
                 ),
                 cls='flex justify-start'
                 )
