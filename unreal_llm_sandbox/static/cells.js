@@ -98,7 +98,7 @@ function executePromptCell(cellId)
     const chat_history = gatherCellsForLLM(cellId);
 
     const prompt = extractCellInput(cellId);
-    
+
     const notebook_name = document.querySelector('.notebook-name')?.value || 'untitled';
 
 
@@ -152,7 +152,7 @@ function extractCellInput(cellId)
 {
     const cell = document.querySelector(`[data-cell-id="${cellId}"]`);
     const cell_type = cell.getAttribute('data-cell-type');
-    
+
     if (cell_type == 'code')
         {
             return getMonacoContent(cell.getAttribute('data-cell-id'));
@@ -284,6 +284,7 @@ function accumulateOutput(cellId,data_dict)
                                 'traceback':data_dict['content']['traceback']});
         }
         output_store.textContent = JSON.stringify(accumulated_data);
+
 }
 
 
@@ -307,6 +308,9 @@ function renderOutputPrompt(cellId,tag='')
         output_display.innerHTML = markdown;
         Prism.highlightAllUnder(output_display);
     }
+    output_display.scrollTop = output_display.scrollHeight; 
+
+
 }
 
 
@@ -394,6 +398,8 @@ function renderOutput(cellId, tag='')
 
         }
     output_display.innerHTML = out_html; 
+    output_display.scrollTop = output_display.scrollHeight; 
+
 }
 
 
@@ -431,7 +437,7 @@ function renderOutput(cellId, tag='')
  */
 function moveUp(cellId){
     const cell = document.querySelector(`[data-cell-id="${cellId}"]`);
-    
+
     // Check Sibling
     const sibling = cell.previousElementSibling;
     if (sibling){
@@ -462,7 +468,7 @@ function gatherCellsForLLM(cellId){
         {
             break;
         }
-    
+
         const cell_dict = {'cell_id':id,
                     'cell_type':type,
                     'source':input,
@@ -486,7 +492,7 @@ function extractCellOutput(cellId){
     const cell = document.querySelector(`[data-cell-id="${cellId}"]`);
     const cell_type = cell.getAttribute('data-cell-type');
     const output_store = cell.querySelector('.output-store');
-    
+
     if (cell_type == 'code')
         {
             try{
@@ -503,7 +509,7 @@ function extractCellOutput(cellId){
     {
         return getMonacoContent(cellId);
     }
-        
+
     else{
         return null;
     }
@@ -661,7 +667,7 @@ function executeAgentCell(cellId)
         'context': chat_history  ,
         'notebook': notebook_name 
     };
-    
+
     setMonacoContent(cellId,'')
 
     let tag;
@@ -699,7 +705,7 @@ function executeAgentCell(cellId)
                     {
                         iter += 1
                         iteration_div.textContent = 'Iteration: '+iter.toString();
-                        
+
                         status_div.classList.remove('complete');
                         status_div.classList.add('running');
                         status_div.textContent = 'Writing Code';
@@ -714,7 +720,7 @@ function executeAgentCell(cellId)
                     {
                         status_div.textContent = 'Exectuting Unit Test';
                         tag = 'unit';
-                  
+
                     }
                     if (data.includes( 'DONE')) 
                     {
@@ -803,7 +809,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('textarea[class*="content-edit"]').forEach(textarea => {
         textarea.style.height = 'auto';
         textarea.style.height = Math.min(textarea.scrollHeight, 500) + 'px';
-        
+
         textarea.addEventListener('input', () => {
             textarea.style.height = 'auto';
             textarea.style.height = Math.min(textarea.scrollHeight, 500) + 'px';
@@ -829,12 +835,12 @@ let currentFocusedCellId = null;
 
 document.addEventListener('click', (e) => {
     const cell = e.target.closest('[data-cell-id]');  // Changed from [type="cell"]
-    
+
     // Remove outline from all cells
     document.querySelectorAll('[data-cell-id]').forEach(c => {  // Changed
         c.style.outline = 'none';
     });
-    
+
     // Add outline to clicked cell
     if (cell) {
         cell.style.outline = '2px solid #3b82f6';
