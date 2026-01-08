@@ -9,7 +9,7 @@ import io
 import base64
 import json
 from PIL import Image
-from .cells import MarkdownCell, CodeCell, PromptCell, AgentCell
+from .cells import MarkdownCell, CodeCell, PromptCell#, AgentCell
 from .app_config import PROMPT_SPLIT
 
 # %% ../nbs/notebook_io.ipynb 4
@@ -43,8 +43,8 @@ def reconstruct_cells_from_history(notebook_history):
         elif cell_type == 'prompt':
             cell = PromptCell(source=source, outputs=outputs or '', cell_id=cell_id)
 
-        elif cell_type == 'agent':
-            cell = AgentCell(source_prompt=source, source_code=outputs, cell_id=cell_id)
+        #elif cell_type == 'agent':
+        #    cell = AgentCell(source_prompt=source, source_code=outputs, cell_id=cell_id)
         else:
             raise ValueError(f"Unknown cell type: {cell_type}")
         
@@ -66,9 +66,9 @@ def reconstruct_ipynb_cell(cell):
     jup_cell_type = cell['cell_type']
 
     if jup_cell_type == 'markdown':
-        if 'agent_cell' in cell['metadata']:
-            cell_type = 'agent'
-        elif 'prompt_cell' in cell['metadata']:
+        #if 'agent_cell' in cell['metadata']:
+        #    cell_type = 'agent'
+        if 'prompt_cell' in cell['metadata']:
             cell_type = 'prompt'
         else:
             cell_type = 'markdown'
@@ -82,8 +82,8 @@ def reconstruct_ipynb_cell(cell):
         return CodeCell.from_ipynb(cell)
     elif cell_type == 'prompt':
         return PromptCell.from_ipynb(cell)
-    elif cell_type == 'agent':
-        return AgentCell.from_ipynb(cell)
+    #elif cell_type == 'agent':
+    #    return AgentCell.from_ipynb(cell)
     
     else:
         return None
