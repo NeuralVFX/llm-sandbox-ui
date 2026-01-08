@@ -12,3 +12,4 @@ website:
       - notebook_io.ipynb
       - scripts.ipynb
       - streaming.ipynb
+      - testNotebookE.ipynb
