@@ -66,27 +66,38 @@ The web app provides:
 - `Markdown Cells` - Write notes in Markdown
 - `LLM Prompt Cells` - Chat with LLMs that have full context of your notebook + agentic control of Unreal
 
-# Registering Custom Agent Tools
+# Registering Custom Agentic Tools
 
-Syntax to register a new agentic tool:
+## Syntax to Register
+
+#### Simple Tool:
 ```python
-
+# Simple tool - no patches needed
 @register_tool
-def spawn_cube(location_x: float, location_y: float, location_z: float):
-    """Spawn a cube at the specified world location.
-    
-    Args:
-        location_x: X coordinate
-        location_y: Y coordinate  
-        location_z: Z coordinate
-    
-    Returns:
-        Name of the spawned actor
-    """
-    import unreal
-    # Your Unreal Python code here
-    ...
+def spawn_cube(
+    x: float,  # X world coordinate
+    y: float,  # Y world coordinate
+    z: float   # Z world coordinate
+):
+    """Spawn a cube at the specified location."""
+    # Your implementation here
+    pass
 ```
+
+#### Tool with specific Schema overrides: 
+```python
+# Tool with schema patch - enforces array constraints
+ACTOR_PATHS_PATCH = {'type': 'array', 'items': {'type': 'string'}, 'minItems': 1}
+
+@register_tool(patches={'actor_paths': ACTOR_PATHS_PATCH})
+def delete_actors(
+    actor_paths: List[str]  # List of actor paths to delete
+):
+    """Delete the specified actors from the level."""
+    # Your implementation here
+    pass
+```
+
 #### Either:
 - Run this in a `Code Cell`
 - Or create a new python file in your project's `Content/Python/tools` directory
@@ -95,6 +106,23 @@ def spawn_cube(location_x: float, location_y: float, location_z: float):
 - Tools added to `Content/Python/tools` are discovered on project restart
 #### To use:
 - Open a `Prompt Cell`, Click the 🛠️ icon to activate Unreal tools, and write a prompt!
+
+## View the tool Schema
+Schemas are stored in a global variable `TOOL_SCHEMAS`, printing it should show something like:
+```python
+[{'type': 'function',
+  'function': {'name': 'move_actor_until_hit',
+   'description': '\n    Drop actors onto surfaces below (or in any direction).\n ',
+   'parameters': {'type': 'object',
+    'properties': {'actor_paths': {'type': 'array',
+      'description': 'REQUIRED. Non-empty list of Actor UObject paths (strings). Never pass an empty list.',
+      'items': {'type': 'string'},
+      'minItems': 1},
+     'distance': {'type': 'number', 'description': '', 'default': 10000},
+     'buffer_distance': {'type': 'number',
+      'description': '',
+...
+```
 
 # Requirements
 
