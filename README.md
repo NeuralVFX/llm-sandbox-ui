@@ -97,14 +97,13 @@ def delete_actors(
     # Your implementation here
     pass
 ```
-
 #### Either:
 - Run this in a `Code Cell`
 - Or create a new python file in your project's `Content/Python/tools` directory
 #### Tool Discovery:
 - Tools registered in `Code Cells` are instantly availible to the LLM
 - Tools added to `Content/Python/tools` are discovered on project restart
-#### To use:
+## To use:
 - Open a `Prompt Cell`, Click the 🛠️ icon to activate Unreal tools, and write a prompt!
 
 ## View the tool Schema
