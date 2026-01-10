@@ -15,12 +15,12 @@ from fasthtml.common import *
 from fasthtml.jupyter import JupyUvi
 from starlette.staticfiles import StaticFiles
 
-from .app_config import MODEL, KERNEL_URL, NOTEBOOK_SYS_PROMPT
+from .app_config import MODEL, KERNEL_URL, NOTEBOOK_SYS_PROMPT, UE_TOOL_SYS_PROMPT
 from .cells import MarkdownCell, CodeCell, PromptCell #, AgentCell
 from .streaming import SSEStream, active_streams
 #from unreal_llm_sandbox.kernel import execute_unreal_code, convert_to_accumulated
 from .notebook_io import reconstruct_cells_from_history, prepare_chat_history, reconstruct_ipynb_cell
-from .llm import RemoteToolLLM, send_llm_request
+from .llm import AgenticToolLoop
 #from unreal_llm_sandbox.agent import AgentTools, SYS_PROMPT
 
 from fasthtml.common import *
@@ -125,10 +125,19 @@ async def exe_prompt(cell_id: str, request):
     stream = SSEStream(stream_key)
     
     def run():
-        for msg in send_llm_request(prompt, history=chat_history, use_ue_tools=use_tools):
+        sys_prompt = NOTEBOOK_SYS_PROMPT
+        if use_tools:
+           sys_prompt = UE_TOOL_SYS_PROMPT
+
+        agent = AgenticToolLoop(model=MODEL,
+                                sys_prompt=sys_prompt, 
+                                local=not use_tools)
+
+        for msg in agent.call_llm(chat_history, prompt):
             if stream.aborted(): break
             stream.text(msg)
         stream.done()
+
     
     asyncio.create_task(asyncio.to_thread(run))
     return stream.response()
