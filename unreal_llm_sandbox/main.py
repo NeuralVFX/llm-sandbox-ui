@@ -27,7 +27,7 @@ from fasthtml.common import *
 import importlib.resources
 import unreal_llm_sandbox
 
-# 1. Helper function to read the text content of your files
+
 def get_static(fname, icon=False):
     """Read static file content from package resources.
     
@@ -45,7 +45,6 @@ def get_static(fname, icon=False):
         return ref.read_text(encoding='utf-8')
 
 
-# Then in headers:
 daisy_hdrs =[
 Link(rel="icon", href=f"data:image/png;base64,{get_static('Icon32.png',icon=True)}"),
 Link(href='https://cdn.jsdelivr.net/npm/daisyui@5', rel='stylesheet', type='text/css'),
@@ -64,7 +63,6 @@ require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@late
 Script(src="https://unpkg.com/htmx.org/dist/ext/sse.js")]
 
 
-# FastHTML app setup + daisy_hdrs (the big Style/Script list)
 app = FastHTML(hdrs=daisy_hdrs)
 
 
