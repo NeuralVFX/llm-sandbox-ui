@@ -17,8 +17,30 @@ litellm.drop_params = True
 
 # %% ../nbs/llm.ipynb 4
 class AgenticToolLoop():
+    """Agentic loop that calls LLM with tools until completion or max iterations.
+    
+    Manages message history, tool execution, and streaming responses for
+    multi-turn conversations with tool calling capabilities.
+    
+    Attributes:
+        model: LiteLLM model identifier string.
+        sys_prompt: System prompt for the conversation.
+        local: If True, use local tools; else call Unreal Engine server.
+        max_iters: Maximum tool call iterations before stopping.
+        tools: List of tool schemas for the LLM.
+        messages: Conversation history.
+        llm_turn_result: Result dict from the last LLM turn.
+    """
 
     def __init__(self,model, sys_prompt, local=True, max_iters = 30):
+        """Initialize the agentic tool loop.
+        
+        Args:
+            model: LiteLLM model identifier string.
+            sys_prompt: System prompt for the conversation.
+            local: If True, use local tools; else call Unreal Engine server.
+            max_iters: Maximum tool call iterations before stopping.
+        """
         self.model = model
         self.sys_prompt = sys_prompt
         self.local = local
@@ -30,6 +52,14 @@ class AgenticToolLoop():
         self.llm_turn_result = None
 
     def get_tools(self, local = True):
+        """Fetch available tool schemas.
+        
+        Args:
+            local: If True, return local TOOL_SCHEMAS; else fetch from Unreal.
+            
+        Returns:
+            List of tool schema dicts.
+        """
         # Get Tools from Globals
         if local:
             global TOOL_SCHEMAS
@@ -40,7 +70,16 @@ class AgenticToolLoop():
             return response.json()
 
     def run_single_tool(self, raw_tool_args, tool_name, local=True):
-
+        """Execute a single tool call.
+        
+        Args:
+            raw_tool_args: JSON string of tool arguments.
+            tool_name: Name of the tool to execute.
+            local: If True, run locally; else POST to Unreal server.
+            
+        Returns:
+            String result from tool execution or error message.
+        """
         args = json.loads(raw_tool_args)
 
         if local:
@@ -68,6 +107,14 @@ class AgenticToolLoop():
             return data['result']
 
     def run_tool_calls(self,tool_calls):
+        """Execute a batch of tool calls and update message history.
+        
+        Args:
+            tool_calls: List of dicts with 'tool_id', 'func_name', 'args' keys.
+            
+        Yields:
+            Status strings for each tool execution.
+        """
         for tool_call in tool_calls:
 
             # Get Tool Info
@@ -89,7 +136,14 @@ class AgenticToolLoop():
                                  'content': json.dumps(tool_result)})
 
     def llm_turn(self):
-
+        """Run one LLM completion turn with streaming.
+        
+        Accumulates text and tool calls from the stream, updates message
+        history, and sets llm_turn_result with finish_reason and tool_calls.
+        
+        Yields:
+            Text content chunks from the LLM response.
+        """
         llm_stream = completion(
                                 model=self.model,
                                 messages = self.messages,
@@ -159,7 +213,15 @@ class AgenticToolLoop():
                         'tool_calls':tool_calls}
 
     def call_llm(self, notebook_history, query):
+        """Run the full agentic loop until completion.
         
+        Args:
+            notebook_history: List of prior conversation messages.
+            query: User's query string.
+            
+        Yields:
+            Text chunks and tool execution status messages.
+        """
         # Build History Including Notebook
         self.messages=[
                 {"role": "system", "content":self.sys_prompt},
