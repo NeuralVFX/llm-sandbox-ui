@@ -4,7 +4,7 @@
 __all__ = ['KERNEL_URL', 'MODEL', 'PROMPT_SPLIT', 'NOTEBOOK_SYS_PROMPT', 'UE_TOOL_SYS_PROMPT']
 
 # %% ../nbs/app_config.ipynb 3
-KERNEL_URL = 'http://localhost:8765'
+KERNEL_URL = 'http://localhost:5002'
 
 MODEL = 'gpt-5.2'
 
