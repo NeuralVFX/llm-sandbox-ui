@@ -50,7 +50,7 @@ Follow instructions at **[unreal-llm-sandbox-unreal](https://github.com/NeuralVF
 
 From the menu bar:
 `LLM Sandbox → Start Server`
-- The server runs at `http://127.0.0.1:8765`
+- The server runs at `http://127.0.0.1:5001`
     
 ### Starting the Web Interface
 - Start `unreal-llm-sandbox` from command line ( outside of Unreal )
