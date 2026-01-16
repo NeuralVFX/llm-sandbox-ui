@@ -7,7 +7,7 @@
 </p>
 
 #### This project has two components:
-- Web-Interface: [unreal-llm-sandbox](https://github.com/NeuralVFX/unreal-llm-sandbox)  <--- You are here
+- Web-Interface: [unreal-llm-sandbox](https://github.com/NeuralVFX/llm-sandbox-ui)  <--- You are here
 - Unreal Plugin: [unreal-llm-sandbox-plugin](https://github.com/NeuralVFX/unreal-llm-sandbox-plugin)
   
 # What is this?
@@ -29,7 +29,7 @@ An Unreal Engine plugin that exposes a Python execution server, enabling:
 ### Clone and Install
 Create a new `conda` env, then:
 ```
-git clone https://github.com/NeuralVFX/unreal-llm-sandbox 
+git clone https://github.com/NeuralVFX/llm-sandbo-ui
 cd unreal-llm-sandbox
 pip install -e .
 ```
