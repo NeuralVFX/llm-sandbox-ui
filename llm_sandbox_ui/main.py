@@ -25,7 +25,7 @@ from .llm import AgenticToolLoop
 
 from fasthtml.common import *
 import importlib.resources
-import unreal_llm_sandbox
+import llm_sandbox_ui
 
 
 def get_static(fname, icon=False):
@@ -37,9 +37,9 @@ def get_static(fname, icon=False):
     Returns:
         String content of the file.
     """
-    ref = importlib.resources.files(unreal_llm_sandbox) / 'static' / fname
+    ref = importlib.resources.files(llm_sandbox_ui) / 'static' / fname
     if icon:
-        icon_bytes = (importlib.resources.files(unreal_llm_sandbox) / 'static' / 'Icon128.png').read_bytes()
+        icon_bytes = (importlib.resources.files(llm_sandbox_ui) / 'static' / 'Icon128.png').read_bytes()
         return base64.b64encode(icon_bytes).decode()
     else:
         return ref.read_text(encoding='utf-8')

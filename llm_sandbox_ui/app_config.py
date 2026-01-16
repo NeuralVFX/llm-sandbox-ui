@@ -20,6 +20,6 @@ The TOOLS you have run in Unreal Engine.\n
 Your goal is to use TOOLS to:
 A) Modify the Unreal Scene.\n
 or..
-B) Answer questions ab out the Unreal Scene.\n
+B) Answer questions about the Unreal Scene.\n
 **Use the TOOLS** provided to you to accomplish the task.\n
 Dont respond by generating blocks of code.\n"""

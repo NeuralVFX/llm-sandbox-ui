@@ -365,7 +365,7 @@ class PromptCell(BaseCell):
                     Label(
                         Input(type='checkbox',
                             cls="hidden tool-toggle",
-                            checked=True),
+                            checked=False),
                             tools_ic,
                             cls=cell_button_format + ' cursor-pointer'),
                     Span(cls="loading loading-spinner loading-sm text-primary cell-spinner hidden"),
