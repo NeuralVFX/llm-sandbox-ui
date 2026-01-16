@@ -42,7 +42,7 @@ In Linux, I bet you'll figure it out...
 
 # Unreal Server
 
-Follow instructions at **[unreal-llm-sandbox-unreal](https://github.com/NeuralVFX/unreal-llm-sandbox-plugin)** to install Unreal side
+Follow instructions at **[llm-sandbox-unreal](https://github.com/NeuralVFX/llm-sandbox-unreal)** to install Unreal side
 
 # Usage
 
