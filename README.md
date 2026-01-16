@@ -7,7 +7,7 @@
 </p>
 
 #### This project has two components:
-- Web-Interface: [unreal-llm-sandbox](https://github.com/NeuralVFX/llm-sandbox-ui)  <--- You are here
+- Web-Interface: [llm-sandbox-ui](https://github.com/NeuralVFX/llm-sandbox-ui)  <--- You are here
 - Unreal Plugin: [unreal-llm-sandbox-plugin](https://github.com/NeuralVFX/unreal-llm-sandbox-plugin)
   
 # What is this?
