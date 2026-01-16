@@ -192,7 +192,7 @@ class BaseCell:
                         value: sourceCode,
                         language: 'python',
                         theme: 'vs-dark',
-                        automaticLayout: false,
+                        automaticLayout: true,
                         scrollBeyondLastLine: false,
                         fontSize: 13, 
                         scrollBeyondLastColumn: 0,
