@@ -13,12 +13,12 @@ Follow these steps to install and initialize the LLM Sandbox Web Interface.
    
   In Windows, open `PowerShell` and then:
   ```
-  setx OPENAI_API_KEY *Your_API_key*
+  setx OPENAI_API_KEY "your_api_key_here"
   ```
 
   In Linux, open a console and:
   ```
-  export OPENAI_API_KEY="Your_API_key"
+  export OPENAI_API_KEY=""your_api_key_here"
   ```
     
 ## Initialization
