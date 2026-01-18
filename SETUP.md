@@ -3,7 +3,7 @@
 Follow these steps to install and initialize the LLM Sandbox Web Interface.
 
 ## Installation
-1. Create a new `conda` env, then:
+1. Create and activate a new `conda` env, then:
   ```
   git clone https://github.com/NeuralVFX/llm-sandbox-ui
   cd llm-sandbox-ui
