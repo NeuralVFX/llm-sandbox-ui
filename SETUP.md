@@ -6,7 +6,7 @@ Follow these steps to install and initialize the LLM Sandbox Web Interface
 1. Create a new `conda` env, then:
   ```
   git clone https://github.com/NeuralVFX/llm-sandbox-ui
-  cd llm-sandbox-unreal
+  cd llm-sandbox-ui
   pip install -e .
   ```
 2. Set your `OPENAI_API_KEY`
