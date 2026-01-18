@@ -24,7 +24,8 @@ Follow these steps to install and initialize the LLM Sandbox Web Interface.
 ### Set Custom Options
 You can optionally edit a couple details in the `app_config.py`
 
-- `MODEL` - LLM to run (defaults to gpt-5.2)
+- `MODEL` - LLM to run (defaults to `gpt-5.2`)
+  - For tool use, I dont recommend non-GPT models
 - `NOTEBOOK_SYS_PROMPT` - System prompt for default notebook interaction
 - `UE_TOOL_SYS_PROMPT` - System prompt for Unreal tool use
 
