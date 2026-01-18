@@ -6,126 +6,27 @@
   <img src="https://github.com/NeuralVFX/unreal-llm-sandbox-plugin/raw/main/assets/demo.gif" alt="Demo">
 </p>
 
+LLM Sandbox is a two-part system that links a web-based notebook interface with Unreal Engine,
+allowing Python code and LLMs to interact directly with the editor and scene.
+
 #### This project has two components:
-- Web-Interface: [llm-sandbox-ui](https://github.com/NeuralVFX/llm-sandbox-ui)  <--- You are here
+- Web-Interface: [llm-sandbox-ui](https://github.com/NeuralVFX/llm-sandbox-ui)   <--- You are here
 - Unreal Plugin: [llm-sandbox-unreal](https://github.com/NeuralVFX/llm-sandbox-unreal)
   
-# What is this?
 
-An Unreal Engine plugin that exposes a Python execution server, enabling:
-- A web-based coding interface connected directly to Unreal
-- LLM-assisted code review with full context of your code and errors
-- Creation and deployment of agentic tools that operate inside the engine
+Together, the components enable:
+- Executing Python code inside Unreal Engine from a web interface
+- LLM-assisted interaction with full visibility into code, output, and errors
+- Creation and execution of agentic tools that operate directly on Unreal scenes
+  
+## Documentation
 
-## Features
-- **Code Execution** - All Code is executed directly in Unreal Engine
-- **LLM Execution** - Ask an LLM for help, with your code/errors in context
-- **Agentic Tool Use** - LLM can use tools directly in Unreal Engine
-- **User Tools** - Build and register custom agentic tools instantly
+- **[Setup](SETUP.md)** - Install / Initialize (Unreal Specific Instructions)
+- **[Notebook Usage](docs/USAGE.md)** - Work with notebooks and cell types
+- **[Agent Customization](docs/TOOLS.md)** - Register and extend agentic tools
 
-# Installation
-
-
-### Clone and Install
-Create a new `conda` env, then:
-```
-git clone https://github.com/NeuralVFX/llm-sandbo-ui
-cd unreal-llm-sandbox
-pip install -e .
-```
-### Set your `OPENAI_API_KEY`
-In Windows, open `Powershell` and then:
-```
-setx OPENAI_API_KEY *Your_api_key*
-```
-In Linux, I bet you'll figure it out...
-
-# Unreal Server
-
-Follow instructions at **[llm-sandbox-unreal](https://github.com/NeuralVFX/llm-sandbox-unreal)** to install Unreal side
-
-# Usage
-
-### Starting the Server
-
-From the menu bar:
-`LLM Sandbox → Start Server`
-- The server runs at `http://127.0.0.1:5002`
-    
-### Starting the Web Interface
-- Start `unreal-llm-sandbox` from command line ( outside of Unreal )
-- Open `http://localhost:5001/notebook/notebook.ipynb` ( or any `ipynb` name )
-- If the notebook doesn't exist, a blank one is created
-- Notebooks auto-save every 2 seconds
-- Standard `.ipynb` format, compatible with Jupyter
-
-
-The web app provides:
-- **Notebook Interface** - Jupyter-style interface
-- `Code Cells` - Write and executing Python code in Unreal
-- `Markdown Cells` - Write notes in Markdown
-- `LLM Prompt Cells` - Chat with LLMs that have full context of your notebook + agentic control of Unreal
-
-# Registering Custom Agentic Tools
-
-## Syntax to Register
-
-#### Simple Tool:
-```python
-# Simple tool - no patches needed
-@register_tool
-def spawn_cube(
-    x: float,  # X world coordinate
-    y: float,  # Y world coordinate
-    z: float   # Z world coordinate
-):
-    """Spawn a cube at the specified location."""
-    # Your implementation here
-    pass
-```
-
-#### Tool with specific Schema overrides: 
-```python
-# Tool with schema patch - enforces array constraints
-ACTOR_PATHS_PATCH = {'type': 'array', 'items': {'type': 'string'}, 'minItems': 1}
-
-@register_tool(patches={'actor_paths': ACTOR_PATHS_PATCH})
-def delete_actors(
-    actor_paths: List[str]  # List of actor paths to delete
-):
-    """Delete the specified actors from the level."""
-    # Your implementation here
-    pass
-```
-#### Either:
-- Run this in a `Code Cell`
-- Or create a new python file in your project's `Content/Python/tools` directory
-#### Tool Discovery:
-- Tools registered in `Code Cells` are instantly availible to the LLM
-- Tools added to `Content/Python/tools` are discovered on project restart
-## To use:
-- Open a `Prompt Cell`, Click the 🛠️ icon to activate Unreal tools, and write a prompt!
-
-## View the tool Schema
-Schemas are stored in a global variable `TOOL_SCHEMAS`, printing it should show something like:
-```python
-[{'type': 'function',
-  'function': {'name': 'move_actor_until_hit',
-   'description': '\n    Drop actors onto surfaces below (or in any direction).\n ',
-   'parameters': {'type': 'object',
-    'properties': {'actor_paths': {'type': 'array',
-      'description': 'REQUIRED. Non-empty list of Actor UObject paths (strings). Never pass an empty list.',
-      'items': {'type': 'string'},
-      'minItems': 1},
-     'distance': {'type': 'number', 'description': '', 'default': 10000},
-     'buffer_distance': {'type': 'number',
-      'description': '',
-...
-```
-
-# Requirements
-
+## Requirements
 - Unreal Engine 5.6
-- A conda env for the web-server
-- An Open AI API key
-
+- The Web Interface requires the Unreal plugin to be installed and running in order to use notebooks and LLM features.
+   - **[LLM Sandbox Unreal Plugin](https://github.com/NeuralVFX/llm-sandbox-unreal)** ( installation instruction provided )
+- `OpenAI` **API Key**
