@@ -31,9 +31,8 @@ You can optionally edit a couple details in the `app_config.py`
 
 ## Initialization
 1. Start Web Server
-   
-  - Start `unreal-llm-sandbox` from command line (outside of Unreal)
-  - Open `http://localhost:5001/notebook/notebook.ipynb` (or any `ipynb` name)
-  - If the notebook doesn't exist, a blank one is created
+    - Start `unreal-llm-sandbox` from command line (outside of Unreal)
+    - Open `http://localhost:5001/notebook/notebook.ipynb` (or any `ipynb` name)
+    - If the notebook doesn't exist, a blank one is created
 2. Follow instructions at [LLM Sandbox Unreal](https://github.com/NeuralVFX/llm-sandbox-unreal) to start Unreal Server
 3. Check [USAGE](docs/USAGE.md) for notebook usage directions
