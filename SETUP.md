@@ -10,6 +10,7 @@ Follow these steps to install and initialize the LLM Sandbox Web Interface
   pip install -e .
   ```
 2. Set your `OPENAI_API_KEY`
+   
   In Windows, open `Powershell` and then:
   ```
   setx OPENAI_API_KEY *Your_API_key*
